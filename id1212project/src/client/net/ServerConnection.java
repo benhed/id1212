@@ -36,7 +36,7 @@ public class ServerConnection {
 
     //disconnect from the server and close socket
     public void disconnect() throws IOException {
-        sendMsg(MsgType.DISCONNECT.toString());
+        sendMsgToServer(MsgType.DISCONNECT.toString());
         socket.close();
         socket = null;
         connected = false;
@@ -44,14 +44,15 @@ public class ServerConnection {
 
     //send a username to the server
     public void sendUsername(String username) {
-        sendMsg(MsgType.USER.toString(), username);
+        sendMsgToServer(MsgType.USER.toString(), username);
     }
 
     //send a guess to the server
-    public void sendGuess(String msg) {sendMsg(MsgType.ENTRY.toString(), msg);}
+    public void sendGuess(String msg) {
+        sendMsgToServer(MsgType.ENTRY.toString(), msg);}
 
     //send a message to the server
-    private void sendMsg(String... parts) {
+    private void sendMsgToServer(String... parts) {
         StringJoiner joiner = new StringJoiner(Constants.MSG_DELIMETER);
         for (String part : parts) {
             joiner.add(part);

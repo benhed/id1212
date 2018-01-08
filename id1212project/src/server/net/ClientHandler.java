@@ -40,7 +40,7 @@ class ClientHandler implements Runnable {
         } catch (IOException ioe) {
             throw new UncheckedIOException(ioe);
         }
-        sendMsg("Pick a username using the command 'user' followed by the desired username.");
+        sendMsgToClient("Pick a username using the command 'user' followed by the desired username.");
 
         while (connected) {
             try {
@@ -50,10 +50,10 @@ class ClientHandler implements Runnable {
                         if(server.acceptedUsername(msg.msgBody)){
                             username = msg.msgBody;
                             server.broadcastNotify(username + JOIN_MESSAGE);
-                            sendMsg("Welcome to rock, paper scissor. Type your guess to play (rock/paper/scissor). Type 'quit' to leave.");
+                            sendMsgToClient("Welcome to rock, paper scissor. Type your guess to play (rock/paper/scissor). Type 'quit' to leave.");
                         }
                         else{
-                            sendMsg("That name is already taken, try again.");
+                            sendMsgToClient("That name is already taken, try again.");
                         }
                         break;
                     case ENTRY:
@@ -61,19 +61,19 @@ class ClientHandler implements Runnable {
                             if(msg.msgBody.equalsIgnoreCase("rock") || msg.msgBody.equalsIgnoreCase("paper") || msg.msgBody.equalsIgnoreCase("scissor")){
                                 if(!hasPlayed) {
                                     hasPlayed = true;
-                                    sendMsg("Good choice! Waiting...");
+                                    sendMsgToClient("Good choice! Waiting...");
                                     server.broadcast(username + ": " + msg.msgBody);
                                 }
                                 else{
-                                    sendMsg("You already picked what to play. Wait for other players to make their guess.");
+                                    sendMsgToClient("You already picked what to play. Wait for other players to make their guess.");
                                 }
                             }
                             else{
-                                sendMsg("Invalid input. Try again. Available input: 'rock', 'paper' or 'scissor'. Type 'quit' to leave.");
+                                sendMsgToClient("Invalid input. Try again. Available input: 'rock', 'paper' or 'scissor'. Type 'quit' to leave.");
                             }
                         }
                         else{
-                            sendMsg("You have to pick a custom username to play. Use the command 'user' followed by your desired username.");
+                            sendMsgToClient("You have to pick a custom username to play. Use the command 'user' followed by your desired username.");
                         }
                         break;
                     case DISCONNECT:
@@ -91,7 +91,7 @@ class ClientHandler implements Runnable {
         }
     }
 
-    void sendMsg(String msg) {
+    void sendMsgToClient(String msg) {
         StringJoiner joiner = new StringJoiner(Constants.MSG_DELIMETER);
         joiner.add(MsgType.BROADCAST.toString());
         joiner.add(msg);
