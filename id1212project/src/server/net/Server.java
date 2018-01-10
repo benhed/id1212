@@ -32,7 +32,7 @@ public class Server {
             if(contr.getGuessListLength() == clients.size()) {
                 for (ClientHandler client : clients){
                     for (String entry : contr.getGuesses()) {
-                        client.sendMsg(entry);
+                        client.sendMsgToClient(entry);
                     }
                     String[] result = rps.assertWinner(contr.getGuesses());
                     if(result.length > 0) {
@@ -44,10 +44,10 @@ public class Server {
                     }
                     client.resetPlayerStatus();
                     client.setScore(client.getScore() + client.getRoundScore());
-                    client.sendMsg("You got " + client.getRoundScore() + " points this round!");
-                    client.sendMsg("Your total score is: " + client.getScore());
+                    client.sendMsgToClient("You got " + client.getRoundScore() + " points this round!");
+                    client.sendMsgToClient("Your total score is: " + client.getScore());
                     client.resetRoundScore();
-                    client.sendMsg("Make a guess to play again or type 'quit' to leave.");
+                    client.sendMsgToClient("Make a guess to play again or type 'quit' to leave.");
                 }
                 contr.clearGuessList();
             }
@@ -59,7 +59,7 @@ public class Server {
             if(contr.getGuessListLength() == clients.size()) {
                 for (ClientHandler client : clients){
                     for (String entry : contr.getGuesses()) {
-                        client.sendMsg(entry);
+                        client.sendMsgToClient(entry);
                     }
                     String[] result = rps.assertWinner(contr.getGuesses());
                     if(result.length > 0) {
@@ -71,10 +71,10 @@ public class Server {
                     }
                     client.resetPlayerStatus();
                     client.setScore(client.getScore() + client.getRoundScore());
-                    client.sendMsg("You got " + client.getRoundScore() + " points this round!");
-                    client.sendMsg("Your total score is: " + client.getScore());
+                    client.sendMsgToClient("You got " + client.getRoundScore() + " points this round!");
+                    client.sendMsgToClient("Your total score is: " + client.getScore());
                     client.resetRoundScore();
-                    client.sendMsg("Make a guess to play again or type 'quit' to leave.");
+                    client.sendMsgToClient("Make a guess to play again or type 'quit' to leave.");
                 }
                 contr.clearGuessList();
             }
@@ -84,7 +84,7 @@ public class Server {
     void broadcastNotify(String msg) {
         synchronized (clients) {
             for (ClientHandler client : clients){
-                client.sendMsg(msg + " Players currently in lobby: " + clients.size());
+                client.sendMsgToClient(msg + " Players currently in lobby: " + clients.size());
             }
         }
     }

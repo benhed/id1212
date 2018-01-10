@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.concurrent.CompletableFuture;
 
+//client controller. calls functions in ServerConnection
 public class Controller {
     private final ServerConnection serverConnection = new ServerConnection();
 
